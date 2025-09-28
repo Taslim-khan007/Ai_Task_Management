@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kanban Task Management</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="navbar-brand">
+            <i class="fas fa-tasks"></i>
+            <span>kanban</span>
+        </div>
+        
+        <div class="navbar-search">
+            <i class="fas fa-search search-icon"></i>
+            <input type="text" class="search-bar" placeholder="Search tasks...">
+        </div>
+        
+        <div class="navbar-actions">
+            <button class="btn btn-outline" id="addColumnBtn">
+                <i class="fas fa-plus"></i> Add Column
+            </button>
+            
+            <div class="notification-container">
+                <button class="notification-btn" id="notificationBtn">
+                    <i class="fas fa-bell"></i>
+                    <span class="notification-badge">3</span>
+                </button>
+                <div class="notification-panel" id="notificationPanel">
+                    <div class="notification-header">
+                        Notifications
+                        <button class="notification-clear">Clear All</button>
+                    </div>
+                    <div class="notification-list">
+                        <!-- Notifications will be added here dynamically -->
+                    </div>
+                </div>
+            </div>
+            
+            <div class="user-container">
+                <button class="user-btn" id="userBtn">
+                    <i class="fas fa-user-circle"></i>
+                </button>
+                <div class="user-dropdown" id="userDropdown">
+                    <div class="user-dropdown-item">
+                        <i class="fas fa-user"></i> Profile
+                    </div>
+                    <div class="user-dropdown-item">
+                        <i class="fas fa-cog"></i> Settings
+                    </div>
+                    <div class="user-dropdown-item">
+                        <i class="fas fa-sign-out-alt"></i> Logout
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container">
+        <!-- Kanban Board -->
+        <div class="board-header">
+            <h1 class="board-title">My Kanban Board</h1>
+            <div class="board-stats">
+                <div class="stat-card">
+                    <div class="stat-value" id="totalTasks">12</div>
+                    <div class="stat-label">Total Tasks</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="completedTasks">5</div>
+                    <div class="stat-label">Completed</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="inProgressTasks">3</div>
+                    <div class="stat-label">In Progress</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="kanban-board" id="kanbanBoard">
+            <!-- Columns will be added here dynamically -->
+        </div>
+        
+        <!-- Dashboard -->
+        <div class="dashboard">
+            <div class="dashboard-header">
+                <h2 class="dashboard-title">Project Dashboard</h2>
+                <div class="dashboard-filters">
+                    <select class="form-select" id="timeFilter" style="width: auto;">
+                        <option>Last 7 days</option>
+                        <option>Last 30 days</option>
+                        <option>Last 3 months</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="dashboard-content">
+                <div class="chart-container">
+                    <div class="chart-title">Task Distribution</div>
+                    <canvas id="taskDistributionChart"></canvas>
+                </div>
+                
+                <div class="chart-container">
+                    <div class="chart-title">Priority Overview</div>
+                    <canvas id="priorityChart"></canvas>
+                </div>
+                
+                <div class="dashboard-stats">
+                    <div class="dashboard-stat">
+                        <div class="dashboard-stat-title">Completion Rate</div>
+                        <div class="dashboard-stat-value">42%</div>
+                        <div class="stat-progress">
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 42%"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="dashboard-stat">
+                        <div class="dashboard-stat-title">Avg. Completion Time</div>
+                        <div class="dashboard-stat-value">3.2 days</div>
+                    </div>
+                    <div class="dashboard-stat">
+                        <div class="dashboard-stat-title">Team Productivity</div>
+                        <div class="dashboard-stat-value">78%</div>
+                        <div class="stat-progress">
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 78%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>KanbanFlow</h3>
+                <p>Streamline your workflow with our intuitive task management system.</p>
+            </div>
+            <div class="footer-section">
+                <h4>Features</h4>
+                <ul>
+                    <li>Drag & Drop Interface</li>
+                    <li>Real-time Updates</li>
+                    <li>Task Analytics</li>
+                    <li>Priority Management</li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Contact</h4>
+                <p>Email: taslimkhan06162@gmail.com</p>
+                <p>Phone: +91-(9508489651)</p>
+            </div>
+            <div class="footer-section">
+                <h4>Follow Us</h4>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="https://www.linkedin.com/in/taslim-khan-290455336?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app"><i class="fab fa-linkedin"></i></a>
+                    <a href="https://github.com/Taslim-khan007"><i class="fab fa-github"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 KanbanFlow. All rights reserved.</p>
+        </div>
+    </footer>
+    <!-- Modals -->
+    <!-- Add Task Modal -->
+    <div class="modal" id="taskModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="taskModalTitle">Add New Task</h3>
+                <button class="modal-close" id="taskModalClose">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="taskForm">
+                    <div class="form-group">
+                        <label class="form-label" for="taskTitle">Task Title</label>
+                        <input type="text" class="form-control" id="taskTitle" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label" for="taskDescription">Description</label>
+                        <textarea class="form-control" id="taskDescription" rows="3"></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label" for="taskPriority">Priority</label>
+                        <select class="form-select" id="taskPriority">
+                            <option value="low">Low</option>
+                            <option value="medium">Medium</option>
+                            <option value="high">High</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label" for="taskColumn">Column</label>
+                        <select class="form-select" id="taskColumn">
+                            <!-- Options will be populated dynamically -->
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline" id="taskModalCancel">Cancel</button>
+                <button class="btn btn-primary" id="taskModalSave">Save Task</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Column Modal -->
+    <div class="modal" id="columnModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Add New Column</h3>
+                <button class="modal-close" id="columnModalClose">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="columnForm">
+                    <div class="form-group">
+                        <label class="form-label" for="columnTitle">Column Title</label>
+                        <input type="text" class="form-control" id="columnTitle" placeholder="e.g., Review, Testing" required>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline" id="columnModalCancel">Cancel</button>
+                <button class="btn btn-primary" id="columnModalSave">Add Column</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Snackbar -->
+    <div class="snackbar" id="snackbar"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
