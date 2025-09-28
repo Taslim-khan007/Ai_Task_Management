@@ -120,21 +120,21 @@ h3 { font-size: 1.5rem; }
 .navbar-actions {
     display: flex;
     align-items: center;
-    gap: 1rem;
+    gap: 0.75rem;
 }
 
-/* General button */
+/* IMPROVED ADD COLUMN BUTTON - SMALLER AND BETTER */
 .btn {
-    padding: 0.75rem 1.5rem;
+    padding: 0.625rem 1.25rem;
     border: none;
     border-radius: var(--border-radius-sm);
     cursor: pointer;
     font-weight: 600;
-    font-size: 0.95rem;
+    font-size: 0.9rem;
     transition: var(--transition);
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 6px;
     position: relative;
     overflow: hidden;
 }
@@ -169,6 +169,8 @@ h3 { font-size: 1.5rem; }
     background: transparent;
     border: 2px solid var(--primary);
     color: var(--primary);
+    font-size: 0.85rem;
+    padding: 0.5rem 1rem;
 }
 
 .btn-outline:hover {
@@ -177,64 +179,35 @@ h3 { font-size: 1.5rem; }
     transform: translateY(-2px);
 }
 
-/* Notification & Profile Buttons - improved sizes & UI */
+/* IMPROVED NOTIFICATION AND PROFILE BUTTONS - BETTER SIZED */
 .notification-btn, .user-btn {
     background: none;
     border: none;
-    font-size: 1.4rem;
+    font-size: 1.3rem;
     color: var(--gray-600);
     cursor: pointer;
     position: relative;
-    padding: 0.75rem;
+    padding: 0.5rem;
     border-radius: 50%;
     transition: var(--transition);
+    width: 42px;
+    height: 42px;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-/* Increase profile & notification button size & polish */
-.notification-btn {
-    width: 52px;
-    height: 52px;
-    border-radius: 12px;
-    background: transparent;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.user-btn {
-    width: 56px;
-    height: 56px;
-    border-radius: 12px;
-    background: linear-gradient(180deg, rgba(139,92,246,0.06), transparent);
-    border: 1px solid rgba(99, 102, 241, 0.08);
-    box-shadow: 0 2px 6px rgba(20, 20, 40, 0.03);
-}
-
-/* Avatar inside user-btn if using img */
-.user-btn img {
-    width: 38px;
-    height: 38px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 2px solid white;
-    box-shadow: 0 2px 6px rgba(15, 23, 42, 0.06);
-}
-
-/* hover effects */
 .notification-btn:hover, .user-btn:hover {
     background: var(--gray-100);
     color: var(--primary);
     transform: translateY(-1px);
 }
 
-/* Make notification badge smaller and tidy */
+/* IMPROVED NOTIFICATION BADGE - SMALLER */
 .notification-badge {
     position: absolute;
-    top: 8px;
-    right: 8px;
+    top: 5px;
+    right: 5px;
     background: linear-gradient(135deg, var(--danger) 0%, #f97316 100%);
     color: white;
     border-radius: 50%;
@@ -245,9 +218,8 @@ h3 { font-size: 1.5rem; }
     align-items: center;
     justify-content: center;
     font-weight: 700;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.18);
-    line-height: 1;
-    transform: translate(4px, -4px); /* slight offset for neat overlap */
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    border: 2px solid white;
 }
 
 /* Main Content */
@@ -275,28 +247,21 @@ h3 { font-size: 1.5rem; }
     margin: 0;
 }
 
-/* BOARD STATS - ensure equal widths for the three cards on large screens */
 .board-stats {
     display: flex;
     gap: 1.25rem;
-    flex-wrap: nowrap;
-    align-items: stretch;
-    width: auto;
+    flex-wrap: wrap;
 }
 
-/* Each stat-card will share available space equally */
 .stat-card {
     background: white;
     padding: 1.5rem;
     border-radius: var(--border-radius);
     box-shadow: var(--shadow-md);
     text-align: center;
+    min-width: 140px;
     border-left: 4px solid var(--primary);
     transition: var(--transition);
-    flex: 1 1 0; /* equal flexible width */
-    min-width: 0; /* allows shrinking so flex calculation works */
-    /* Optional visual cap so cards don't become huge on very wide screens */
-    max-width: calc((100% - 2.5rem) / 3);
 }
 
 .stat-card:hover {
@@ -317,7 +282,7 @@ h3 { font-size: 1.5rem; }
     font-weight: 600;
 }
 
-/* IMPROVED KANBAN BOARD - HORIZONTAL SCROLL WITH FLEX */
+/* KANBAN BOARD - EQUAL WIDTH COLUMNS WITH HORIZONTAL SCROLL */
 .kanban-board {
     display: flex;
     gap: 1.75rem;
@@ -327,8 +292,6 @@ h3 { font-size: 1.5rem; }
     scrollbar-width: thin;
     scrollbar-color: var(--primary-light) var(--gray-200);
     scroll-behavior: smooth;
-    /* ensure new columns appear on the right and scroll persists */
-    -webkit-overflow-scrolling: touch;
 }
 
 .kanban-board::-webkit-scrollbar {
@@ -353,13 +316,13 @@ h3 { font-size: 1.5rem; }
     background: white;
     border-radius: var(--border-radius);
     box-shadow: var(--shadow-md);
-    min-width: 320px;
-    max-width: 320px;
+    min-width: 380px; /* Equal width for all columns */
+    max-width: 380px;
     display: flex;
     flex-direction: column;
     transition: var(--transition);
     border: 1px solid var(--gray-200);
-    height: 580px; /* Reduced height */
+    height: 580px;
     min-height: 580px;
     flex-shrink: 0; /* Prevent columns from shrinking */
 }
@@ -403,7 +366,6 @@ h3 { font-size: 1.5rem; }
     font-weight: 600;
 }
 
-/* Column actions */
 .column-actions {
     display: flex;
     gap: 6px;
@@ -439,7 +401,7 @@ h3 { font-size: 1.5rem; }
     scrollbar-width: thin;
     scrollbar-color: var(--gray-300) transparent;
     min-height: 0;
-    max-height: calc(580px - 80px - 60px); /* Adjusted for reduced height */
+    max-height: calc(580px - 80px - 60px);
 }
 
 .tasks-container::-webkit-scrollbar {
@@ -498,7 +460,7 @@ h3 { font-size: 1.5rem; }
     border-left-color: var(--primary-light);
 }
 
-/* IMPROVED SEARCH HIGHLIGHT - BETTER VISIBILITY */
+/* IMPROVED SEARCH HIGHLIGHT */
 .task-highlight {
     background: linear-gradient(135deg, #fff9db 0%, #fff3bf 100%);
     border-left-color: #f59e0b;
@@ -582,7 +544,7 @@ h3 { font-size: 1.5rem; }
     border-top: 1px solid var(--gray-200);
 }
 
-/* IMPROVED TASK ACTION BUTTONS - FIXED TOOLTIP */
+/* IMPROVED TASK ACTION BUTTONS */
 .task-actions {
     display: flex;
     gap: 8px;
@@ -605,7 +567,6 @@ h3 { font-size: 1.5rem; }
     position: relative;
 }
 
-/* ENHANCED BUTTON COLORS */
 .task-action-btn.edit-task {
     color: #3b82f6;
     background: rgba(59, 130, 246, 0.1);
@@ -660,14 +621,13 @@ h3 { font-size: 1.5rem; }
     font-weight: 500;
 }
 
-/* ADD TASK BUTTON - improved UI and slightly smaller */
 .add-task-btn {
     width: calc(100% - 2.5rem);
     margin: 0 1.25rem 1.25rem;
-    padding: 0.75rem;
+    padding: 0.875rem;
     background: transparent;
     border: 2px dashed var(--gray-300);
-    border-radius: calc(var(--border-radius-sm) - 2px);
+    border-radius: var(--border-radius-sm);
     color: var(--gray-500);
     cursor: pointer;
     transition: var(--transition);
@@ -677,7 +637,6 @@ h3 { font-size: 1.5rem; }
     gap: 8px;
     font-weight: 600;
     flex-shrink: 0;
-    font-size: 0.95rem;
 }
 
 .add-task-btn:hover {
@@ -687,12 +646,12 @@ h3 { font-size: 1.5rem; }
     transform: translateY(-1px);
 }
 
-/* Dashboard Section */
+/* IMPROVED DASHBOARD SECTION - MORE COMPACT AND PROFESSIONAL */
 .dashboard {
     background: white;
     border-radius: var(--border-radius);
     box-shadow: var(--shadow-md);
-    padding: 2.5rem;
+    padding: 2rem;
     margin-bottom: 2.5rem;
     border: 1px solid var(--gray-200);
 }
@@ -701,7 +660,7 @@ h3 { font-size: 1.5rem; }
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 2.5rem;
+    margin-bottom: 2rem;
     flex-wrap: wrap;
     gap: 1.5rem;
 }
@@ -720,43 +679,47 @@ h3 { font-size: 1.5rem; }
 
 .dashboard-content {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 2rem;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
 }
 
 .chart-container {
     background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
     border-radius: var(--border-radius);
-    padding: 1.75rem;
-    height: 320px;
+    padding: 1.5rem;
+    height: 280px;
     display: flex;
     flex-direction: column;
     border: 1px solid var(--gray-200);
 }
 
 .chart-title {
-    font-size: 1.1rem;
+    font-size: 1rem;
     font-weight: 700;
-    margin-bottom: 1.25rem;
+    margin-bottom: 1rem;
     text-align: center;
     color: var(--gray-800);
 }
 
+/* IMPROVED DASHBOARD STATS - COMPACT GRID LAYOUT */
 .dashboard-stats {
-    display: flex;
-    flex-direction: column;
-    gap: 1.25rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    grid-column: 1 / -1;
+    margin-top: 1rem;
 }
 
 .dashboard-stat {
     background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
     border-radius: var(--border-radius);
-    padding: 1.75rem;
+    padding: 1.25rem;
     display: flex;
     flex-direction: column;
     justify-content: center;
     border: 1px solid var(--gray-200);
     transition: var(--transition);
+    min-height: 120px;
 }
 
 .dashboard-stat:hover {
@@ -765,17 +728,19 @@ h3 { font-size: 1.5rem; }
 }
 
 .dashboard-stat-title {
-    font-size: 1rem;
+    font-size: 0.9rem;
     font-weight: 600;
-    margin-bottom: 0.75rem;
+    margin-bottom: 0.5rem;
     color: var(--gray-600);
+    text-align: center;
 }
 
 .dashboard-stat-value {
-    font-size: 2.25rem;
+    font-size: 2rem;
     font-weight: 800;
     color: var(--primary);
-    margin-bottom: 1rem;
+    margin-bottom: 0.75rem;
+    text-align: center;
 }
 
 .stat-progress {
@@ -784,21 +749,21 @@ h3 { font-size: 1.5rem; }
 
 .progress-bar {
     width: 100%;
-    height: 8px;
+    height: 6px;
     background-color: var(--gray-300);
-    border-radius: 4px;
+    border-radius: 3px;
     overflow: hidden;
 }
 
 .progress-fill {
     height: 100%;
     background: linear-gradient(90deg, var(--primary) 0%, var(--primary-light) 100%);
-    border-radius: 4px;
+    border-radius: 3px;
     transition: width 0.5s ease;
-    box-shadow: 0 2px 4px rgba(139, 92, 246, 0.3);
+    box-shadow: 0 1px 3px rgba(139, 92, 246, 0.3);
 }
 
-/* Modal Styles - made slightly narrower for notification update forms */
+/* IMPROVED MODAL - SMALLER AND BETTER */
 .modal {
     display: none;
     position: fixed;
@@ -818,11 +783,11 @@ h3 { font-size: 1.5rem; }
     background: white;
     border-radius: var(--border-radius);
     width: 100%;
-    max-width: 420px; /* reduced from 480px for a smaller, cleaner update form */
+    max-width: 380px; /* Smaller modal */
     box-shadow: var(--shadow-lg);
     animation: modalSlideIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     border: 1px solid var(--gray-200);
-    max-height: 90vh;
+    max-height: 75vh; /* Smaller height */
     overflow-y: auto;
 }
 
@@ -838,17 +803,20 @@ h3 { font-size: 1.5rem; }
 }
 
 .modal-header {
-    padding: 1.5rem;
+    padding: 1rem 1.25rem;
     border-bottom: 1px solid var(--gray-200);
     display: flex;
     justify-content: space-between;
     align-items: center;
     background: var(--gray-50);
     border-radius: var(--border-radius) var(--border-radius) 0 0;
+    position: sticky;
+    top: 0;
+    z-index: 10;
 }
 
 .modal-title {
-    font-size: 1.3rem;
+    font-size: 1.1rem;
     font-weight: 700;
     color: var(--gray-900);
     margin: 0;
@@ -857,14 +825,14 @@ h3 { font-size: 1.5rem; }
 .modal-close {
     background: none;
     border: none;
-    font-size: 1.5rem;
+    font-size: 1.3rem;
     cursor: pointer;
     color: var(--gray-500);
     padding: 0.25rem;
     border-radius: 6px;
     transition: var(--transition);
-    width: 32px;
-    height: 32px;
+    width: 28px;
+    height: 28px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -877,11 +845,11 @@ h3 { font-size: 1.5rem; }
 }
 
 .modal-body {
-    padding: 1.5rem;
+    padding: 1.25rem;
 }
 
 .form-group {
-    margin-bottom: 1.25rem;
+    margin-bottom: 1rem;
 }
 
 .form-label {
@@ -889,15 +857,15 @@ h3 { font-size: 1.5rem; }
     margin-bottom: 0.5rem;
     font-weight: 600;
     color: var(--gray-700);
-    font-size: 0.95rem;
+    font-size: 0.85rem;
 }
 
 .form-control {
     width: 100%;
-    padding: 0.875rem 1rem;
+    padding: 0.75rem 1rem;
     border: 2px solid var(--gray-300);
     border-radius: var(--border-radius-sm);
-    font-size: 1rem;
+    font-size: 0.9rem;
     transition: var(--transition);
     background: white;
     font-family: inherit;
@@ -912,10 +880,10 @@ h3 { font-size: 1.5rem; }
 
 .form-select {
     width: 100%;
-    padding: 0.875rem 1rem;
+    padding: 0.75rem 1rem;
     border: 2px solid var(--gray-300);
     border-radius: var(--border-radius-sm);
-    font-size: 1rem;
+    font-size: 0.9rem;
     background-color: white;
     cursor: pointer;
     font-family: inherit;
@@ -924,7 +892,7 @@ h3 { font-size: 1.5rem; }
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
     background-repeat: no-repeat;
     background-position: right 1rem center;
-    background-size: 16px;
+    background-size: 12px;
 }
 
 .form-select:focus {
@@ -935,34 +903,36 @@ h3 { font-size: 1.5rem; }
 }
 
 .modal-footer {
-    padding: 1.5rem;
+    padding: 1rem 1.25rem;
     border-top: 1px solid var(--gray-200);
     display: flex;
     justify-content: flex-end;
-    gap: 1rem;
+    gap: 0.75rem;
     background: var(--gray-50);
     border-radius: 0 0 var(--border-radius) var(--border-radius);
+    position: sticky;
+    bottom: 0;
 }
 
-/* Notification Panel */
+/* IMPROVED NOTIFICATION PANEL - MORE COMPACT */
 .notification-panel {
     display: none;
     position: absolute;
     top: 100%;
     right: 0;
-    width: 380px;
+    width: 320px;
     background: white;
     border-radius: var(--border-radius);
     box-shadow: var(--shadow-lg);
     z-index: 100;
-    max-height: 480px;
+    max-height: 380px; /* Smaller height */
     overflow-y: auto;
     border: 1px solid var(--gray-200);
     margin-top: 0.5rem;
 }
 
 .notification-header {
-    padding: 1.25rem;
+    padding: 0.875rem 1rem;
     border-bottom: 1px solid var(--gray-200);
     font-weight: 700;
     display: flex;
@@ -970,6 +940,10 @@ h3 { font-size: 1.5rem; }
     align-items: center;
     background: var(--gray-50);
     border-radius: var(--border-radius) var(--border-radius) 0 0;
+    font-size: 0.9rem;
+    position: sticky;
+    top: 0;
+    z-index: 10;
 }
 
 .notification-clear {
@@ -977,10 +951,10 @@ h3 { font-size: 1.5rem; }
     border: none;
     color: var(--primary);
     cursor: pointer;
-    font-size: 0.9rem;
+    font-size: 0.8rem;
     font-weight: 600;
-    padding: 0.5rem;
-    border-radius: 6px;
+    padding: 0.3rem 0.6rem;
+    border-radius: 4px;
     transition: var(--transition);
 }
 
@@ -993,10 +967,10 @@ h3 { font-size: 1.5rem; }
 }
 
 .notification-item {
-    padding: 1.25rem;
+    padding: 0.875rem 1rem;
     border-bottom: 1px solid var(--gray-200);
     display: flex;
-    gap: 12px;
+    gap: 8px;
     transition: var(--transition);
     cursor: pointer;
 }
@@ -1011,29 +985,38 @@ h3 { font-size: 1.5rem; }
 
 .notification-icon {
     color: var(--primary);
-    font-size: 1.3rem;
-    margin-top: 0.25rem;
+    font-size: 1rem;
+    margin-top: 0.1rem;
+    flex-shrink: 0;
 }
 
 .notification-content {
     flex: 1;
+    min-width: 0;
 }
 
 .notification-title {
     font-weight: 600;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.3rem;
     color: var(--gray-900);
+    font-size: 0.85rem;
+    line-height: 1.3;
 }
 
 .notification-message {
-    font-size: 0.9rem;
+    font-size: 0.8rem;
     color: var(--gray-600);
-    line-height: 1.4;
-    margin-bottom: 0.5rem;
+    line-height: 1.3;
+    margin-bottom: 0.3rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
 }
 
 .notification-time {
-    font-size: 0.8rem;
+    font-size: 0.7rem;
     color: var(--gray-500);
     font-weight: 500;
 }
@@ -1041,12 +1024,12 @@ h3 { font-size: 1.5rem; }
 /* Snackbar */
 .snackbar {
     visibility: hidden;
-    min-width: 300px;
+    min-width: 280px;
     background-color: var(--gray-800);
     color: white;
     text-align: center;
     border-radius: var(--border-radius-sm);
-    padding: 1rem 1.5rem;
+    padding: 0.875rem 1.25rem;
     position: fixed;
     z-index: 1000;
     left: 50%;
@@ -1054,6 +1037,7 @@ h3 { font-size: 1.5rem; }
     transform: translateX(-50%);
     box-shadow: var(--shadow-lg);
     font-weight: 500;
+    font-size: 0.9rem;
 }
 
 .snackbar.show {
@@ -1071,13 +1055,13 @@ h3 { font-size: 1.5rem; }
     to {bottom: 0; opacity: 0;}
 }
 
-/* User Dropdown */
+/* IMPROVED USER DROPDOWN - BETTER UI */
 .user-dropdown {
     display: none;
     position: absolute;
     top: 100%;
     right: 0;
-    width: 220px;
+    width: 180px;
     background: white;
     border-radius: var(--border-radius);
     box-shadow: var(--shadow-lg);
@@ -1087,15 +1071,16 @@ h3 { font-size: 1.5rem; }
 }
 
 .user-dropdown-item {
-    padding: 1rem 1.25rem;
+    padding: 0.75rem 1rem;
     cursor: pointer;
     transition: var(--transition);
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 8px;
     color: var(--gray-700);
     font-weight: 500;
     border-bottom: 1px solid var(--gray-200);
+    font-size: 0.85rem;
 }
 
 .user-dropdown-item:hover {
@@ -1115,13 +1100,191 @@ h3 { font-size: 1.5rem; }
 }
 
 .user-dropdown-item i {
-    width: 20px;
+    width: 16px;
     text-align: center;
     color: var(--gray-500);
+    font-size: 0.9rem;
 }
 
 .user-dropdown-item:hover i {
     color: var(--primary);
+}
+
+/* Drag and Drop Styles */
+.dragging {
+    opacity: 0.5;
+    transform: rotate(5deg);
+}
+
+.drag-over {
+    background: var(--gray-100);
+    border: 2px dashed var(--primary-light);
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+    .dashboard-content {
+        grid-template-columns: 1fr;
+    }
+    
+    .chart-container:last-child {
+        max-width: 100%;
+    }
+}
+
+@media (max-width: 992px) {
+    .kanban-board {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+    }
+    
+    .column {
+        min-width: 350px;
+    }
+    
+    .dashboard-content {
+        grid-template-columns: 1fr;
+    }
+    
+    .chart-container:last-child {
+        max-width: 100%;
+    }
+    
+    .footer-content {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+        text-align: center;
+    }
+    
+    .navbar {
+        flex-wrap: wrap;
+    }
+    
+    .navbar-search {
+        order: 3;
+        max-width: 100%;
+        margin: 1rem 0 0;
+    }
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 1.5rem;
+    }
+    
+    .board-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .board-stats {
+        width: 100%;
+        justify-content: space-between;
+    }
+    
+    .stat-card {
+        flex: 1;
+        min-width: auto;
+    }
+    
+    .dashboard {
+        padding: 1.5rem;
+    }
+    
+    .dashboard-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .dashboard-stats {
+        grid-template-columns: 1fr;
+    }
+    
+    .modal-content {
+        margin: 1rem;
+    }
+    
+    .navbar-actions {
+        gap: 0.5rem;
+    }
+    
+    .btn {
+        padding: 0.5rem 1rem;
+        font-size: 0.85rem;
+    }
+    
+    .tasks-container {
+        max-height: 400px;
+    }
+    
+    .column {
+        min-width: 300px;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 1rem;
+    }
+    
+    .navbar {
+        padding: 1rem;
+    }
+    
+    .board-title {
+        font-size: 1.75rem;
+    }
+    
+    .stat-card {
+        padding: 1rem;
+    }
+    
+    .stat-value {
+        font-size: 1.75rem;
+    }
+    
+    .dashboard {
+        padding: 1rem;
+    }
+    
+    .modal-content {
+        max-width: 100%;
+        margin: 0.5rem;
+    }
+    
+    .notification-panel {
+        width: 100vw;
+        right: -1rem;
+    }
+    
+    .user-dropdown {
+        width: 100vw;
+        right: -1rem;
+    }
+    
+    .task-actions {
+        gap: 4px;
+    }
+    
+    .task-action-btn {
+        width: 28px;
+        height: 28px;
+        padding: 6px;
+    }
+    
+    .notification-btn, .user-btn {
+        width: 38px;
+        height: 38px;
+        font-size: 1.2rem;
+    }
+    
+    .notification-badge {
+        width: 14px;
+        height: 14px;
+        font-size: 0.6rem;
+        top: 4px;
+        right: 4px;
+    }
 }
 
 /* Footer */
@@ -1177,172 +1340,4 @@ h3 { font-size: 1.5rem; }
     border-top: 1px solid #495057;
     font-size: 0.9rem;
     color: white;
-}
-
-
-/* Drag and Drop Styles */
-.dragging {
-    opacity: 0.5;
-    transform: rotate(5deg);
-}
-
-.drag-over {
-    background: var(--gray-100);
-    border: 2px dashed var(--primary-light);
-}
-
-/* Responsive Design */
-@media (max-width: 1200px) {
-    .dashboard-content {
-        grid-template-columns: 1fr 1fr;
-    }
-    
-    .chart-container:last-child {
-        grid-column: 1 / -1;
-        max-width: 50%;
-        margin: 0 auto;
-    }
-
-    /* Slightly relax stat-card max-width on medium screens */
-    .stat-card {
-        max-width: none;
-    }
-}
-
-@media (max-width: 992px) {
-    .kanban-board {
-        flex-wrap: nowrap;
-        overflow-x: auto;
-    }
-    
-    .dashboard-content {
-        grid-template-columns: 1fr;
-    }
-    
-    .chart-container:last-child {
-        max-width: 100%;
-    }
-    
-    .footer-content {
-        grid-template-columns: 1fr;
-        gap: 2rem;
-        text-align: center;
-    }
-    
-    .navbar {
-        flex-wrap: wrap;
-    }
-    
-    .navbar-search {
-        order: 3;
-        max-width: 100%;
-        margin: 1rem 0 0;
-    }
-}
-
-@media (max-width: 768px) {
-    .container {
-        padding: 1.5rem;
-    }
-    
-    .board-header {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-    
-    .board-stats {
-        width: 100%;
-        justify-content: space-between;
-    }
-    
-    .stat-card {
-        flex: 1 1 auto;
-        min-width: 0;
-    }
-    
-    .stat-card + .stat-card {
-        margin-left: 0.5rem;
-    }
-    
-    .dashboard {
-        padding: 1.5rem;
-    }
-    
-    .dashboard-header {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-    
-    .modal-content {
-        margin: 1rem;
-        max-width: 90%;
-    }
-    
-    .navbar-actions {
-        gap: 0.5rem;
-    }
-    
-    .btn {
-        padding: 0.625rem 1rem;
-        font-size: 0.9rem;
-    }
-    
-    .tasks-container {
-        max-height: 400px;
-    }
-    
-    .column {
-        min-width: 280px;
-    }
-}
-
-@media (max-width: 480px) {
-    .container {
-        padding: 1rem;
-    }
-    
-    .navbar {
-        padding: 1rem;
-    }
-    
-    .board-title {
-        font-size: 1.75rem;
-    }
-    
-    .stat-card {
-        padding: 1rem;
-    }
-    
-    .stat-value {
-        font-size: 1.75rem;
-    }
-    
-    .dashboard {
-        padding: 1rem;
-    }
-    
-    .modal-content {
-        max-width: 100%;
-        margin: 0.5rem;
-    }
-    
-    .notification-panel {
-        width: 100vw;
-        right: -1rem;
-    }
-    
-    .user-dropdown {
-        width: 100vw;
-        right: -1rem;
-    }
-    
-    .task-actions {
-        gap: 4px;
-    }
-    
-    .task-action-btn {
-        width: 28px;
-        height: 28px;
-        padding: 6px;
-    }
 }

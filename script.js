@@ -52,9 +52,6 @@ const addColumnBtn = document.getElementById('addColumnBtn');
 const taskModal = document.getElementById('taskModal');
 const columnModal = document.getElementById('columnModal');
 const snackbar = document.getElementById('snackbar');
-const totalTasksEl = document.getElementById('totalTasks');
-const completedTasksEl = document.getElementById('completedTasks');
-const inProgressTasksEl = document.getElementById('inProgressTasks');
 const timeFilter = document.getElementById('timeFilter');
 
 // Initialize the application
@@ -63,7 +60,7 @@ function init() {
     renderNotifications();
     setupEventListeners();
     initializeCharts();
-    updateStats();
+    updateAllRealTimeData();
 }
 
 // Render columns and tasks
@@ -182,10 +179,14 @@ function drop(e) {
         if (sourceColumnId !== targetColumnId) {
             // Move task to new column
             moveTask(parseInt(taskId), sourceColumnId, targetColumnId);
-            showNotification('Task Moved', `Task moved to ${getColumnTitle(targetColumnId)}`, 'move');
+            const taskTitle = getTaskById(parseInt(taskId))?.title || 'Task';
+            showNotification('Task Moved', `Task "${taskTitle}" moved to ${getColumnTitle(targetColumnId)}`, 'move');
         }
         
         targetColumn.appendChild(taskElement);
+        
+        // Update all real-time data after drag & drop
+        updateAllRealTimeData();
     }
 }
 
@@ -200,8 +201,6 @@ function moveTask(taskId, fromColumnId, toColumnId) {
             const task = fromColumn.tasks[taskIndex];
             fromColumn.tasks.splice(taskIndex, 1);
             toColumn.tasks.push(task);
-            updateStats();
-            updateCharts();
         }
     }
 }
@@ -294,8 +293,8 @@ function formatTime(date) {
     return date.toLocaleDateString();
 }
 
-// Update statistics
-function updateStats() {
+// Update dashboard statistics
+function updateDashboardStats() {
     let total = 0;
     let completed = 0;
     let inProgress = 0;
@@ -306,14 +305,23 @@ function updateStats() {
         if (column.title === 'In Progress') inProgress = column.tasks.length;
     });
     
-    totalTasksEl.textContent = total;
-    completedTasksEl.textContent = completed;
-    inProgressTasksEl.textContent = inProgress;
-    
-    // Update completion rate
+    // Update dashboard stats
     const completionRate = total > 0 ? Math.round((completed / total) * 100) : 0;
-    document.querySelectorAll('.dashboard-stat-value')[0].textContent = `${completionRate}%`;
-    document.querySelectorAll('.progress-fill')[0].style.width = `${completionRate}%`;
+    
+    // Update all dashboard stat values
+    const dashboardStats = document.querySelectorAll('.dashboard-stat-value');
+    if (dashboardStats.length >= 4) {
+        dashboardStats[0].textContent = `${completionRate}%`; // Completion Rate
+        dashboardStats[1].textContent = total; // Total Tasks
+        dashboardStats[2].textContent = completed; // Completed
+        dashboardStats[3].textContent = inProgress; // In Progress
+    }
+    
+    // Update progress bar
+    const progressFill = document.querySelector('.progress-fill');
+    if (progressFill) {
+        progressFill.style.width = `${completionRate}%`;
+    }
 }
 
 // Initialize charts
@@ -373,7 +381,7 @@ function initializeCharts() {
         data: {
             labels: ['High', 'Medium', 'Low'],
             datasets: [{
-                data: [0, 0, 0], // Will be calculated
+                data: calculatePriorityCounts(),
                 backgroundColor: [
                     'rgba(230, 57, 70, 0.7)',
                     'rgba(255, 152, 0, 0.7)',
@@ -397,17 +405,10 @@ function initializeCharts() {
             }
         }
     });
-    
-    updateCharts();
 }
 
-// Update charts with current data
-function updateCharts() {
-    // Update task distribution chart
-    taskDistributionChart.data.datasets[0].data = columns.map(col => col.tasks.length);
-    taskDistributionChart.update();
-    
-    // Calculate priority counts
+// Calculate priority counts
+function calculatePriorityCounts() {
     const priorityCounts = { high: 0, medium: 0, low: 0 };
     columns.forEach(column => {
         column.tasks.forEach(task => {
@@ -415,18 +416,48 @@ function updateCharts() {
         });
     });
     
-    // Update priority chart
-    priorityChart.data.datasets[0].data = [
+    return [
         priorityCounts.high,
         priorityCounts.medium,
         priorityCounts.low
     ];
+}
+
+// Update charts with current data
+function updateCharts() {
+    // Update task distribution chart
+    taskDistributionChart.data.datasets[0].data = columns.map(col => col.tasks.length);
+    taskDistributionChart.data.labels = columns.map(col => col.title);
+    taskDistributionChart.update();
+    
+    // Update priority chart
+    priorityChart.data.datasets[0].data = calculatePriorityCounts();
     priorityChart.update();
+}
+
+// Update all real-time data
+function updateAllRealTimeData() {
+    updateDashboardStats(); // Update dashboard stats
+    updateCharts(); // Update both charts
+    updateColumnTaskCounts(); // Update task counts in column headers
+}
+
+// Update task counts in column headers
+function updateColumnTaskCounts() {
+    columns.forEach(column => {
+        const columnElement = document.querySelector(`[data-column-id="${column.id}"]`);
+        if (columnElement) {
+            const taskCountElement = columnElement.querySelector('.task-count');
+            if (taskCountElement) {
+                taskCountElement.textContent = `(${column.tasks.length})`;
+            }
+        }
+    });
 }
 
 // Setup event listeners
 function setupEventListeners() {
-    // Search functionality
+    // Search functionality - FIXED: Remove highlight when search is cleared
     searchBar.addEventListener('input', function() {
         const searchTerm = this.value.toLowerCase();
         const tasks = document.querySelectorAll('.task');
@@ -435,10 +466,11 @@ function setupEventListeners() {
             const title = task.querySelector('.task-title').textContent.toLowerCase();
             const description = task.querySelector('.task-description').textContent.toLowerCase();
             
-            if (title.includes(searchTerm) || description.includes(searchTerm)) {
+            if (searchTerm && (title.includes(searchTerm) || description.includes(searchTerm))) {
                 task.classList.add('task-highlight');
                 task.scrollIntoView({ behavior: 'smooth', block: 'center' });
             } else {
+                // Remove highlight when search term is empty or doesn't match
                 task.classList.remove('task-highlight');
             }
         });
@@ -626,9 +658,8 @@ function saveTask() {
         }
     }
     
-    renderColumns();
-    updateStats();
-    updateCharts();
+    renderColumns(); // Re-render to reflect changes
+    updateAllRealTimeData(); // Update all real-time data
     closeTaskModal();
 }
 
@@ -651,9 +682,8 @@ function deleteTask(taskId, columnId) {
                 const taskTitle = column.tasks[taskIndex].title;
                 column.tasks.splice(taskIndex, 1);
                 showNotification('Task Deleted', `Task "${taskTitle}" was deleted`, 'delete');
-                renderColumns();
-                updateStats();
-                updateCharts();
+                renderColumns(); // Re-render to reflect changes
+                updateAllRealTimeData(); // Update all real-time data
             }
         }
     }
@@ -679,19 +709,19 @@ function deleteColumn(columnId) {
     
     const column = columns.find(col => col.id === columnId);
     if (column && confirm(`Are you sure you want to delete the "${column.title}" column? All tasks in this column will be moved to the first available column.`)) {
-        // Move tasks to the first column
+        // Move tasks to the first column that's not being deleted
         const firstColumn = columns.find(col => col.id !== columnId);
         if (firstColumn) {
+            const movedTasksCount = column.tasks.length;
             firstColumn.tasks.push(...column.tasks);
+            
+            // Remove the column
+            columns = columns.filter(col => col.id !== columnId);
+            
+            showNotification('Column Deleted', `Column "${column.title}" was deleted and ${movedTasksCount} tasks moved to ${firstColumn.title}`, 'delete');
+            renderColumns(); // Re-render to reflect changes
+            updateAllRealTimeData(); // Update all real-time data
         }
-        
-        // Remove the column
-        columns = columns.filter(col => col.id !== columnId);
-        
-        showNotification('Column Deleted', `Column "${column.title}" was deleted`, 'delete');
-        renderColumns();
-        updateStats();
-        updateCharts();
     }
 }
 
@@ -714,6 +744,7 @@ function saveColumn() {
         // Edit existing column
         const column = columns.find(col => col.id === parseInt(columnId));
         if (column) {
+            const oldTitle = column.title;
             column.title = title;
             showNotification('Column Updated', `Column renamed to "${title}"`, 'update');
         }
@@ -729,8 +760,8 @@ function saveColumn() {
         showNotification('Column Added', `New column "${title}" added`, 'add');
     }
     
-    renderColumns();
-    updateCharts();
+    renderColumns(); // Re-render to reflect changes
+    updateAllRealTimeData(); // Update all real-time data
     closeColumnModal();
 }
 
